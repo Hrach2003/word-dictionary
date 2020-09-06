@@ -1,10 +1,10 @@
+import mongoose from 'mongoose';
 import express from "express";
 import http from 'http'
 import socket from 'socket.io'
 import bodyParser from 'body-parser'
 import passport from "passport";
 import dotenv from 'dotenv'
-import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
@@ -14,7 +14,13 @@ import { connectToDB } from "./helpers/DB";
 import './passport-setup'
 import { authMiddleware } from "./helpers/authMiddleware";
 import { MailService } from "./helpers/sendEmails";
-import { WordModel } from "./models/word.model";
+
+import session from 'express-session'
+import connect from 'connect-mongo'
+import { getWordsWithoutDefenitions } from './utils/getWordDefenitions';
+import { getWordsWithoutExamples } from './utils/getWordExamples';
+import { getWordsWithoutSynonyns } from './utils/getWordSynonyms';
+const MongoStore = connect(session)
 dotenv.config()
 
 const app = express()
@@ -23,7 +29,7 @@ const io = socket(http)
 
 ;(async () => {
   try {
-    const DB_connection = await connectToDB(process.env.DB as string);
+    const DB_connection = await connectToDB(process.env.DB as string)
     app.use(cookieParser());
     app.use(cors())   
     app.use(express.json())
@@ -33,6 +39,9 @@ const io = socket(http)
       cookie: { maxAge: 24 * 60 * 60 * 1000, },
       secret: process.env.COOKIE_SECRET as string || 'asdfsgaddfvdrvawefzsdfchbsae',
       resave: true,
+      store: new MongoStore({
+        mongooseConnection: mongoose.connection
+      }),
       saveUninitialized: true
     }))
 
@@ -56,10 +65,9 @@ const io = socket(http)
 
     
     if (process.env.NODE_ENV === "production") {
-      app.use(express.static('./public'));
-      app.get('/', (req, res) => {
-        res.sendFile('./public/index.html');
-      });
+      getWordsWithoutDefenitions()
+      getWordsWithoutExamples()
+      getWordsWithoutSynonyns()
     }
 
     

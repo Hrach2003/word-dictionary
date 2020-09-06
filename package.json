@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -rf ./build && tsc --build",
     "dev": "nodemon",
-    "start": "NODE_ENV=production yarn dev"
+    "heroku:postbuild": "yarn build",
+    "start": "NODE_ENV=production node ./build/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -36,6 +37,7 @@
     "admin-bro-mongoose": "^0.5.2",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
