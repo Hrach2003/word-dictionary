@@ -1,6 +1,6 @@
 {
   "watch": ["src"],
   "ext": "ts",
-  "ignore": ["src/**/*.spec.ts"],
+  "ignore": ["src/**/*.spec.ts", "src/helpers/fillDataToDB.ts", "src/utils/*.ts"],
   "exec": "npx ts-node --files ./src/app.ts" 
 }

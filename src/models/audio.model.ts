@@ -20,5 +20,5 @@ const audioSchema = new Schema({
 })
 
 
-const AudioModel = model<IAudio>("Language", audioSchema)
+const AudioModel = model<IAudio>("Audio", audioSchema)
 export { AudioModel }

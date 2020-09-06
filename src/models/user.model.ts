@@ -1,9 +1,7 @@
 import { Schema, model, Document } from "mongoose";
-// import bcrypt from 'bcrypt'
 
 export interface IUser extends Document {
   email: string
-  // password: string,
   username: string,
   picture: string,
   google_id: string
@@ -15,14 +13,6 @@ const appUser = new Schema<IUser>({
     type: String,
     unique: true
   },
-  // password: {
-  //   required: true,
-  //   type: String,
-  //   set: (password: string) => {
-  //     return bcrypt.hashSync(password, 12)
-  //   },
-  //   get: () => undefined
-  // },
   username: {
     required: true,
     unique: true,

@@ -1,33 +1,30 @@
 import { Schema, model, Document } from 'mongoose';
 import { ILanguage } from './language.model';
 
-interface IWordDefenitionSchema extends Document {
-  word: string,
+interface IWordDefinitionsSchema extends Document {
+  definition: string,
   language: ILanguage['_id']  
 }
 
 interface IWordExamplesSchema extends Document {
-  name: string
+  text: string
   year: number  
 }
 
-interface IWordSynonymsSchema extends Document {
-  synonym: string  
-}
 
 export interface IWordSchema extends Document {
   word: string,
   language: ILanguage['_id'],
-  examples: IWordExamplesSchema[],
-  defenitions: IWordDefenitionSchema[],
-  synonyms:  IWordSchema[],
-  date: Date
+  examples?: IWordExamplesSchema[],
+  definitions?: IWordDefinitionsSchema[],
+  synonyms: IWordSchema[],
+  date?: Date
 }
 
 
 
-const wordDefenitionSchema = new Schema<IWordDefenitionSchema>({
-  word: {
+const wordDefenitionSchema = new Schema<IWordDefinitionsSchema>({
+  definition: {
     type: String,
     required: true
   },
@@ -38,14 +35,16 @@ const wordDefenitionSchema = new Schema<IWordDefenitionSchema>({
 }, { _id: false })
 
 
-
 const wordExamplesSchema = new Schema<IWordExamplesSchema>({
   text: {
     type: String,
     required: true,
     maxlength: 2048
   },
-  year: Number
+  year: { 
+    type: Number,
+    default: 2020
+  }
 }, { _id: false })
 
 
@@ -65,10 +64,9 @@ const wordSchema = new Schema({
   examples: [wordExamplesSchema],
   synonyms: [{
     type: Schema.Types.ObjectId,
-    ref: 'Word',
-    required: true,
+    ref: "Word"
   }],
-  defenitions: [wordDefenitionSchema],
+  definitions: [wordDefenitionSchema],
   date: {
     type: Date,
     default: Date.now
@@ -77,3 +75,5 @@ const wordSchema = new Schema({
 
 const WordModel = model<IWordSchema>("Word", wordSchema)
 export { WordModel }
+
+//kill -9 $(lsof -t -i:4000)

@@ -25,11 +25,7 @@ const io = socket(http)
   try {
     const DB_connection = await connectToDB(process.env.DB as string);
     app.use(cookieParser());
-    app.use(cors({
-      origin: "http://localhost:3000", 
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      credentials: true 
-    }))   
+    app.use(cors())   
     app.use(express.json())
     app.use(bodyParser.json()) 
 
@@ -73,10 +69,10 @@ const io = socket(http)
   }
 })()
 
-io.on('connection', (_socket) => {
-  console.log('a user connected');
-});
+// io.on('connection', (_socket) => {
+//   console.log('a user connected');
+// });
 
-const PORT = process.env.PORT || 8312 as number 
+const PORT = process.env.PORT || 4000 as number 
 server.listen(PORT, () => console.log(`server started on http://localhost:${PORT}`))
 
