@@ -31,7 +31,7 @@ export function getWordsWithoutDefenitions() {
                 await WordModel.findByIdAndUpdate(word?._id, { 
                   $addToSet: {
                     definitions: {
-                      $each: res_examples.map((ex: any) => ({ definition: ex.text, language: language?._id})) 
+                      $each: res_examples.map((ex: any) => ({ definition: ex.text, language })) 
                     }
                   }
                 }, { new: true })
@@ -61,6 +61,7 @@ export function getWordsWithoutDefenitions() {
     console.log(err)
     process.exit(-1)
   })
-
-
 }
+
+if(process.env.NODE_ENV === "development") getWordsWithoutDefenitions();
+

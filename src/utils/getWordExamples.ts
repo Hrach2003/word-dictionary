@@ -60,6 +60,8 @@ export function getWordsWithoutExamples() {
     console.log(err)
     process.exit(-1)
   })
-
 }
+
+if(process.env.NODE_ENV === "development") getWordsWithoutExamples();
+
 

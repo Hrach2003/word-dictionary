@@ -87,4 +87,4 @@ export function getWordsWithoutSynonyns() {
   })
 }
 
-
+if(process.env.NODE_ENV === "development") getWordsWithoutSynonyns();

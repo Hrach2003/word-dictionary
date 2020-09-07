@@ -73,7 +73,7 @@ const io = socket(http)
     
     // MailService.emit('send_words', await WordModel.find({}))
   } catch (error) {
-    console.log(error)
+    console.log("error", error)
   }
 })()
 
