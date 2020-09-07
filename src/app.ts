@@ -20,7 +20,6 @@ import connect from 'connect-mongo'
 import { getWordsWithoutDefenitions } from './utils/getWordDefenitions';
 import { getWordsWithoutExamples } from './utils/getWordExamples';
 import { getWordsWithoutSynonyns } from './utils/getWordSynonyms';
-import { WordModel } from './models/word.model';
 const MongoStore = connect(session)
 dotenv.config()
 

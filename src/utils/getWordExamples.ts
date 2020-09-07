@@ -62,6 +62,6 @@ export function getWordsWithoutExamples() {
   })
 }
 
-if(process.env.NODE_ENV === "development") getWordsWithoutExamples();
+// if(process.env.NODE_ENV === "development") getWordsWithoutExamples();
 
 
