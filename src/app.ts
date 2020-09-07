@@ -69,7 +69,7 @@ const io = socket(http)
     if (process.env.NODE_ENV === "production") {
       getWordsWithoutDefenitions()
       getWordsWithoutExamples()
-      getWordsWithoutSynonyns()
+      // getWordsWithoutSynonyns()
     }
 
     
