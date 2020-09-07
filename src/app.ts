@@ -20,6 +20,7 @@ import connect from 'connect-mongo'
 import { getWordsWithoutDefenitions } from './utils/getWordDefenitions';
 import { getWordsWithoutExamples } from './utils/getWordExamples';
 import { getWordsWithoutSynonyns } from './utils/getWordSynonyms';
+import { WordModel } from './models/word.model';
 const MongoStore = connect(session)
 dotenv.config()
 
@@ -62,6 +63,7 @@ const io = socket(http)
     app.use(url, Admin) 
 
     app.get('/user', authMiddleware, (req, res) => res.json({ user: req.user }))
+    app.get('/', authMiddleware, async (req, res) => res.json({ message: "Hello World" }))
 
     
     if (process.env.NODE_ENV === "production") {
@@ -71,7 +73,7 @@ const io = socket(http)
     }
 
     
-    // MailService.emit('send_words', await WordModel.find({}))
+    
   } catch (error) {
     console.log("error", error)
   }
