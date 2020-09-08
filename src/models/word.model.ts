@@ -61,6 +61,9 @@ const wordSchema = new Schema({
     ref: 'Language',
     required: true
   }, 
+  // phrase: {
+
+  // },
   examples: [wordExamplesSchema],
   synonyms: [{
     type: Schema.Types.ObjectId,

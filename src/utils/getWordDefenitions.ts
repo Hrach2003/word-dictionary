@@ -9,7 +9,7 @@ export function getWordsWithoutDefenitions() {
   connectToDB(process.env.DB as string).then((_connection) => {
     async function* wordDefenitionsGenerator() {
       const words = await WordModel.find({ 
-        'defenitions.0': { $exists: false } 
+        definitions: { $size: 0 } 
       })
       console.log('starting...')
       while (words.length > 0) {
@@ -63,5 +63,5 @@ export function getWordsWithoutDefenitions() {
   })
 }
 
-if(process.env.NODE_ENV === "development") getWordsWithoutDefenitions();
+getWordsWithoutDefenitions();
 

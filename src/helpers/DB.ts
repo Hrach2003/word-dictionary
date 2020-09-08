@@ -11,7 +11,7 @@ export const connectToDB = (DB_uri: string): Promise<typeof mongoose | string> =
         useFindAndModify: false
       })
       console.log('connected to DB')
-      mongoose.set('debug', process.env.NODE_ENV === "development" ? true : false)
+      // mongoose.set('debug', process.env.NODE_ENV === "development" ? true : false)
       resolve(DB_connection)
     } catch(error) {
       reject(error.message)

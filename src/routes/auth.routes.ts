@@ -7,10 +7,10 @@ const router = Router()
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
-  (req: Request, res: Response) => {
+  (_req: Request, res: Response) => {
     // Successful authentication, redirect home.
-    console.log(req.user)
-    res.redirect('/');
+    console.log('logged in')
+    res.redirect('http://localhost:3000');
   });
 
 router.get('/logout', (req: Request, res: Response) => {

@@ -1,10 +1,12 @@
 import { Schema, model, Document } from "mongoose";
+import { IWordSchema } from "./word.model";
 
 export interface IUser extends Document {
   email: string
   username: string,
   picture: string,
   google_id: string
+  words: IWordSchema["_id"][]
 }
 
 const appUser = new Schema<IUser>({
@@ -26,7 +28,11 @@ const appUser = new Schema<IUser>({
     unique: true,
     required: true,
     type: String
-  }
+  },
+  words: [{
+    type: Schema.Types.ObjectId,
+    ref: "Word"
+  }]
 }, { toJSON: { getters: true } })
 
 

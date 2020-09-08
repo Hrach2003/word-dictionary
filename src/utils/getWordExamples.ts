@@ -8,7 +8,7 @@ export function getWordsWithoutExamples() {
   connectToDB(process.env.DB as string).then((_connection) => {
     async function* wordExamplesGenerator() {
       const words = await WordModel.find({ 
-        'examples.0': { $exists: false } 
+        examples: { $size: 0 } 
       })
       console.log('starting...')
       while (words.length > 0) {
@@ -61,7 +61,6 @@ export function getWordsWithoutExamples() {
     process.exit(-1)
   })
 }
-
-// if(process.env.NODE_ENV === "development") getWordsWithoutExamples();
+getWordsWithoutExamples();
 
 

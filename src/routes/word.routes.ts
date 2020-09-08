@@ -6,15 +6,15 @@ const router = Router()
 
 router.get('/', wordQuery)
 
-router.get('/all', async (req: Request, res: Response) => {
-  WordModel.find({})
-    // .populate('synonyms', 'word')
-    .populate('language')
-    .exec((err, words) => {
-      if(err) return res.json({ message: err.message })
-      return res.json({ words })
-    })
-})
+// router.get('/all', async (req: Request, res: Response) => {
+//   WordModel.find({})
+//     // .populate('synonyms', 'word')
+//     .populate('language')
+//     .exec((err, words) => {
+//       if(err) return res.json({ message: err.message })
+//       return res.json({ words })
+//     })
+// })
 
 router.get('/:word', async (req: Request, res: Response) => {
   const { word } = req.params 

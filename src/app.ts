@@ -58,17 +58,20 @@ const io = socket(http)
     const { router: Language } = await import('./routes/language.routes')
     app.use("/language", Language)
 
+    const { router: User } = await import('./routes/user.routes')
+    app.use('/user', User)
+
     const { router: Admin, url = '/admin' } = registerAdminPanel(DB_connection)
     app.use(url, Admin) 
 
-    app.get('/user', authMiddleware, (req, res) => res.json({ user: req.user }))
-    app.get('/', authMiddleware, async (req, res) => res.json({ message: "Hello World" }))
+    app.get('/', async (req, res) => res.json({ message: "Hello World" }))
 
+    console.log(process.env.NODE_ENV)
     
     if (process.env.NODE_ENV === "production") {
       getWordsWithoutDefenitions()
       getWordsWithoutExamples()
-      // getWordsWithoutSynonyns()
+      getWordsWithoutSynonyns()
     }
 
     
