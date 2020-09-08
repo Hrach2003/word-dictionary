@@ -35,15 +35,15 @@ const io = socket(http)
     app.use(express.json())
     app.use(bodyParser.json()) 
 
-    app.use(session({
-      cookie: { maxAge: 24 * 60 * 60 * 1000, },
-      secret: process.env.COOKIE_SECRET as string || 'asdfsgaddfvdrvawefzsdfchbsae',
-      resave: true,
-      store: new MongoStore({
-        mongooseConnection: mongoose.connection
-      }),
-      saveUninitialized: true
-    }))
+    // app.use(session({
+    //   cookie: { maxAge: 24 * 60 * 60 * 1000, },
+    //   secret: process.env.COOKIE_SECRET as string || 'asdfsgaddfvdrvawefzsdfchbsae',
+    //   resave: true,
+    //   store: new MongoStore({
+    //     mongooseConnection: mongoose.connection
+    //   }),
+    //   saveUninitialized: true
+    // }))
 
     app.use(passport.initialize());
     app.use(passport.session());
