@@ -5,8 +5,11 @@ import { UserModel, IUser } from "../models/user.model";
 
 const router = Router();
 
-router.get('/', authMiddleware, (req: Request, res: Response) => {
-  const user = req.user as IUser
+router.get('/', authMiddleware, async (req: Request, res: Response) => {
+  const req_user = req.user as IUser
+
+  const user = await UserModel.findOne({ google_id: req_user.google_id })
+    .populate('words', 'word')
   return res.json({ user });
 }) 
 

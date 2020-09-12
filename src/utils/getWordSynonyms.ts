@@ -10,10 +10,11 @@ export function getWordsWithoutSynonyns() {
   connectToDB(process.env.DB as string).then((_connection) => {
 
     async function* synonynsGenerator() {
+      console.time("synonym")
       const words = await WordModel.find({ 
-
         synonyms: { $size: 0 } 
       })
+      console.timeEnd("synonym")
       console.log('starting...')
       while (words.length > 0) {
         yield words.shift()
@@ -28,11 +29,14 @@ export function getWordsWithoutSynonyns() {
         for await (const word of wordsGen) {
           try {
             const wordsCount = word?.word.trim().split(' ').length || 1
+            console.log('word', word?.word)
+
             const response = await fetch(`http://api.datamuse.com/words?${ wordsCount > 1 ? 'ml' : 'rel_syn' }=${word?.word}&max=10`)
+            // ${ wordsCount > 1 ? 'ml' : 'rel_syn' }
             const res_synonyms: { word: string }[] = await response.json()
 
             console.log(res_synonyms)
-          
+            
             res_synonyms.forEach(({ word: wordToAdd }) => {
               try {
                 WordModel.findOne({ word: wordToAdd }, async (err, findedWord) => {
@@ -88,4 +92,4 @@ export function getWordsWithoutSynonyns() {
   })
 }
 
-getWordsWithoutSynonyns();
+// getWordsWithoutSynonyns();

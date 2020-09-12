@@ -8,9 +8,12 @@ dotenv.config()
 export function getWordsWithoutDefenitions() {
   connectToDB(process.env.DB as string).then((_connection) => {
     async function* wordDefenitionsGenerator() {
+      console.time('query defenition')
       const words = await WordModel.find({ 
         definitions: { $size: 0 } 
       })
+      console.timeEnd('query defenition')
+      console.log('definition len', words.length)
       console.log('starting...')
       while (words.length > 0) {
         yield words.shift()
@@ -63,5 +66,5 @@ export function getWordsWithoutDefenitions() {
   })
 }
 
-getWordsWithoutDefenitions();
+// getWordsWithoutDefenitions();
 

@@ -7,9 +7,13 @@ dotenv.config()
 export function getWordsWithoutExamples() {
   connectToDB(process.env.DB as string).then((_connection) => {
     async function* wordExamplesGenerator() {
+      console.time('example time')
       const words = await WordModel.find({ 
         examples: { $size: 0 } 
       })
+      console.timeEnd('example time')
+      console.log('example len', words.length)
+
       console.log('starting...')
       while (words.length > 0) {
         yield words.shift()
@@ -61,6 +65,6 @@ export function getWordsWithoutExamples() {
     process.exit(-1)
   })
 }
-getWordsWithoutExamples();
+// getWordsWithoutExamples();
 
 

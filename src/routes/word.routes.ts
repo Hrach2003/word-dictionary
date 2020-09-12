@@ -22,6 +22,22 @@ router.get('/:word', async (req: Request, res: Response) => {
     .findOne({ word })
     .populate('synonyms', 'word')
     .exec((err, word) => {
+      if(err) return res.json({ message: err.message }).status(404)
+      console.log(word)
+      return res.json({ word })
+    })
+})
+
+// WordModel.createIndexes()
+// WordModel.ensureIndexes({ word: 'text' });
+
+router.get('/search/:search', async (req: Request, res: Response) => {
+  const { search } = req.params 
+  WordModel
+    .find({ $text: { $search: search } }, { score: { $meta: "textScore" } })
+    .sort({ score: { $meta: "textScore" } })
+    .populate('synonyms', 'word')
+    .exec((err, word) => {
       if(err) return res.json({ message: err.message })
       return res.json({ word })
     })

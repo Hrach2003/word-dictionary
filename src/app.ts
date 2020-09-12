@@ -12,7 +12,6 @@ import { registerAdminPanel } from './admin/admin.routes'
 import { connectToDB } from "./helpers/DB";
 
 import './passport-setup'
-import { authMiddleware } from "./helpers/authMiddleware";
 import { MailService } from "./helpers/sendEmails";
 
 import session from 'express-session'
@@ -35,15 +34,15 @@ const io = socket(http)
     app.use(express.json())
     app.use(bodyParser.json()) 
 
-    // app.use(session({
-    //   cookie: { maxAge: 24 * 60 * 60 * 1000, },
-    //   secret: process.env.COOKIE_SECRET as string || 'asdfsgaddfvdrvawefzsdfchbsae',
-    //   resave: true,
-    //   store: new MongoStore({
-    //     mongooseConnection: mongoose.connection
-    //   }),
-    //   saveUninitialized: true
-    // }))
+    app.use(session({
+      cookie: { maxAge: 24 * 60 * 60 * 1000, },
+      secret: process.env.COOKIE_SECRET as string || 'asdfsgaddfvdrvawefzsdfchbsae',
+      resave: false,
+      store: new MongoStore({
+        mongooseConnection: mongoose.connection
+      }),
+      saveUninitialized: true
+    }))
 
     app.use(passport.initialize());
     app.use(passport.session());
@@ -68,14 +67,11 @@ const io = socket(http)
 
     console.log(process.env.NODE_ENV)
     
-    if (process.env.NODE_ENV === "production") {
+    // if (process.env.NODE_ENV === "production") {
       getWordsWithoutDefenitions()
       getWordsWithoutExamples()
-      getWordsWithoutSynonyns()
-    }
-
-    
-    
+      // getWordsWithoutSynonyns()
+    // }
   } catch (error) {
     console.log("error", error)
   }
