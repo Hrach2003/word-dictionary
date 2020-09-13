@@ -73,8 +73,8 @@ const io = socket(http)
     console.log(process.env.NODE_ENV)
     
     // if (process.env.NODE_ENV === "production") {
-      getWordsWithoutDefenitions()
-      getWordsWithoutExamples()
+      // getWordsWithoutDefenitions()
+      // getWordsWithoutExamples()
       // getWordsWithoutSynonyns()
     // }
   } catch (error) {
