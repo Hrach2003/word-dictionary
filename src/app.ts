@@ -14,9 +14,9 @@ import './passport-setup'
 // import { MailService } from "./helpers/sendEmails";
 
 
-// import { getWordsWithoutDefenitions } from './utils/getWordDefenitions';
-// import { getWordsWithoutExamples } from './utils/getWordExamples';
-// import { getWordsWithoutSynonyns } from './utils/getWordSynonyms';
+import { getWordsWithoutDefenitions } from './utils/getWordDefenitions';
+import { getWordsWithoutExamples } from './utils/getWordExamples';
+import { getWordsWithoutSynonyns } from './utils/getWordSynonyms';
 import session from 'express-session'
 import connectMongoStore from 'connect-mongo'
 const MongoStore = connectMongoStore(session)
@@ -72,11 +72,11 @@ const io = socket(http)
 
     console.log(process.env.NODE_ENV)
     
-    // if (process.env.NODE_ENV === "production") {
-      // getWordsWithoutDefenitions()
-      // getWordsWithoutExamples()
-      // getWordsWithoutSynonyns()
-    // }
+    if (process.env.NODE_ENV === "production") {
+      getWordsWithoutDefenitions()
+      getWordsWithoutExamples()
+      getWordsWithoutSynonyns()
+    }
   } catch (error) {
     console.log("error", error)
   }
