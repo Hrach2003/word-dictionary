@@ -9,6 +9,9 @@
     "heroku-postbuild": "rm -rf ./build && npx tsc",
     "start": "NODE_ENV=production node ./build/app.js"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
