@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
     "@types/bcrypt": "^3.0.0",
     "@types/body-parser": "^1.19.0",
     "@types/connect-mongodb-session": "^0.0.3",
@@ -27,9 +30,6 @@
     "@types/passport": "^1.0.4",
     "@types/passport-google-oauth20": "^2.0.3",
     "@types/socket.io": "^2.1.8",
-    "nodemon": "^2.0.4"
-  },
-  "dependencies": {
     "admin-bro": "^2.8.0",
     "admin-bro-expressjs": "^2.1.1",
     "admin-bro-mongoose": "^0.5.2",

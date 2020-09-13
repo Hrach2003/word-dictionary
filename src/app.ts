@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import express from "express";
+import express, {Request, Response} from "express";
 import http from 'http'
 import socket from 'socket.io'
 import bodyParser from 'body-parser'
@@ -68,7 +68,7 @@ const io = socket(http)
     const { router: Admin, url = '/admin' } = registerAdminPanel(DB_connection)
     app.use(url, Admin) 
 
-    app.get('/', async (req, res) => res.json({ message: "Hello World" }))
+    app.get('/', async (req: Request, res: Response) => res.json({ message: "Hello World" }))
 
     console.log(process.env.NODE_ENV)
     
