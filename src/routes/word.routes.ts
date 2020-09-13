@@ -50,7 +50,6 @@ router.get('/:word/synonyms', async (req: Request, res: Response) => {
     .populate('synonyms', 'word')
     .exec((err, word) => {
       if(err) return res.json({ message: err.message })
-
       return res.json({ synonyms: word?.synonyms })
     })
 })

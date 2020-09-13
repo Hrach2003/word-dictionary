@@ -5,7 +5,6 @@ import socket from 'socket.io'
 import bodyParser from 'body-parser'
 import passport from "passport";
 import dotenv from 'dotenv'
-import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 import { registerAdminPanel } from './admin/admin.routes'
@@ -14,12 +13,13 @@ import { connectToDB } from "./helpers/DB";
 import './passport-setup'
 import { MailService } from "./helpers/sendEmails";
 
-import session from 'express-session'
-import connect from 'connect-mongo'
+
 import { getWordsWithoutDefenitions } from './utils/getWordDefenitions';
 import { getWordsWithoutExamples } from './utils/getWordExamples';
 import { getWordsWithoutSynonyns } from './utils/getWordSynonyms';
-const MongoStore = connect(session)
+import session from 'express-session'
+import connectMongoStore from 'connect-mongo'
+const MongoStore = connectMongoStore(session)
 dotenv.config()
 
 const app = express()
@@ -29,20 +29,23 @@ const io = socket(http)
 ;(async () => {
   try {
     const DB_connection = await connectToDB(process.env.DB as string)
-    app.use(cookieParser());
+    if (process.env.NODE_ENV === "production") {
+      app.set('trust proxy', 1);
+    }  
+
+    app.use(session({
+      cookie: { maxAge: 24 * 60 * 60 * 1000},
+      secret: process.env.COOKIE_SECRET as string || 'asdfsgaddfvdrvawefzsdfchbsae',
+      resave: false,
+      saveUninitialized: false,
+      store: new MongoStore({
+        mongooseConnection: mongoose.connection 
+      }),
+    }))
+
     app.use(cors())   
     app.use(express.json())
     app.use(bodyParser.json()) 
-
-    app.use(session({
-      cookie: { maxAge: 24 * 60 * 60 * 1000, },
-      secret: process.env.COOKIE_SECRET as string || 'asdfsgaddfvdrvawefzsdfchbsae',
-      resave: false,
-      store: new MongoStore({
-        mongooseConnection: mongoose.connection
-      }),
-      saveUninitialized: true
-    }))
 
     app.use(passport.initialize());
     app.use(passport.session());
@@ -59,6 +62,8 @@ const io = socket(http)
 
     const { router: User } = await import('./routes/user.routes')
     app.use('/user', User)
+
+
 
     const { router: Admin, url = '/admin' } = registerAdminPanel(DB_connection)
     app.use(url, Admin) 

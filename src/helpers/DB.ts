@@ -1,7 +1,7 @@
-import mongoose from "mongoose"
+import mongoose, { Connection } from "mongoose"
 
 export const connectToDB = (DB_uri: string): Promise<typeof mongoose | string> => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve: (DB: typeof mongoose) => void, reject: (err: string) => void) => {
     try {
       const DB = DB_uri || 'mongodb://localhost:27017/test' as string
       const DB_connection = await mongoose.connect(DB, {
