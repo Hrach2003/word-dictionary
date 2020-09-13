@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf ./build && tsc --build",
     "dev": "NODE_ENV=development nodemon",
-    "start": "NODE_ENV=production node ./build/app.ts"
+    "start": "NODE_ENV=production node ./build/app.js"
   },
   "author": "",
   "license": "ISC",
