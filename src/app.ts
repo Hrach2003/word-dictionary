@@ -11,12 +11,12 @@ import { registerAdminPanel } from './admin/admin.routes'
 import { connectToDB } from "./helpers/DB";
 
 import './passport-setup'
-import { MailService } from "./helpers/sendEmails";
+// import { MailService } from "./helpers/sendEmails";
 
 
-import { getWordsWithoutDefenitions } from './utils/getWordDefenitions';
-import { getWordsWithoutExamples } from './utils/getWordExamples';
-import { getWordsWithoutSynonyns } from './utils/getWordSynonyms';
+// import { getWordsWithoutDefenitions } from './utils/getWordDefenitions';
+// import { getWordsWithoutExamples } from './utils/getWordExamples';
+// import { getWordsWithoutSynonyns } from './utils/getWordSynonyms';
 import session from 'express-session'
 import connectMongoStore from 'connect-mongo'
 const MongoStore = connectMongoStore(session)
@@ -29,9 +29,9 @@ const io = socket(http)
 ;(async () => {
   try {
     const DB_connection = await connectToDB(process.env.DB as string)
-    if (process.env.NODE_ENV === "production") {
-      app.set('trust proxy', 1);
-    }  
+    // if (process.env.NODE_ENV === "production") {
+    //   app.set('trust proxy', 1);
+    // }  
 
     app.use(session({
       cookie: { maxAge: 24 * 60 * 60 * 1000},
