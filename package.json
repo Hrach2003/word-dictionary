@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "rm -rf ./build && npx tsc --build",
+    "build": "rm -rf ./build && npx tsc",
     "dev": "NODE_ENV=development nodemon",
-    "heroku-cleanup": "yarn build",
+    "heroku-postbuild": "rm -rf ./build && npx tsc",
     "start": "NODE_ENV=production node ./build/app.js"
   },
   "author": "",
