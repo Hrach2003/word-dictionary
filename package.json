@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "rm -rf ./build && tsc --build",
+    "build": "rm -rf ./build && npx tsc --build",
     "dev": "NODE_ENV=development nodemon",
     "heroku-cleanup": "yarn build",
     "start": "NODE_ENV=production node ./build/app.js"
